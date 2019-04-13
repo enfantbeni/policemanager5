@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Liste des agents dans une agence</title>
+</head>
+<body>
+
+		
+		<div class="card">
+		  <div class="card-header">
+		    <h2> Liste des agents </h2>
+		  </div>	  
+		  <div class="card-body">
+		  
+		  
+		    	<table width="100%" border="0" cellspacing="1" cellpadding="2" class="table-bordered">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Numero </th><th>  </th><th> Code Agent </th> <th> Nom Agent </th></tr>
+					<tr th:each ="agent, a : ${agents}" >  															
+  						<td  width="100" th:utext="${agentsPage.size*(agentsPage.number)+c.index+1}" style="padding-left:10px" ></td>
+  						<td  width="100" th:utext="${agent.codeAgent}" ></td>
+  						<td  width="100" th:utext="${agent.nomAgent}" ></td>				
+					</tr>					            
+		 	   </table>
+	
+		<nav class="page" aria-label="Pagination" th:if="${agentsPage.totalPages gt 0}">
+		    <ul class="pagination justify-content-center font-weight-bold">
+		        <li class="page-item" th:classappend="${agentsPage.number eq 0} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/agentsPage?page={id}(id=${clientsPage.number lt 2 ? 1 : clientsPage.number})}"
+		               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+		                <span aria-hidden="true">&lt; Précédent </span>
+		            </a>
+		        </li>
+		        <li class="page-item" th:classappend="${i eq clientsPage.number + 1} ? 'active'"
+		            th:each="i : ${#numbers.sequence( 1, clientsPage.totalPages, 1)}">
+		            <a class="page-link" th:href="@{/clientsPage?page={id}(id=${i})}" th:text="${i}"
+		               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+		        </li>
+		        <li class="page-item" th:classappend="${clientsPage.number+1  eq clientsPage.totalPages} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/clientsPage?page={id}(id=${clientsPage.number+1  eq clientsPage.totalPages ?clientsPage.number+1 :clientsPage.number + 2})}"
+		               aria-label="Next" title="Next Page" data-toggle="tooltip">
+		                <span aria-hidden="true"> Suivant &gt;</span>
+		            </a>
+		        </li>
+		    </ul>
+		</nav>
+		 	 
+
+
+		  </div>
+		</div>
+	
+
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+package com.belife.policemanager.model.dto;
+
+public class BanqueDto {
+	private Integer idBanque;	
+	private String nomAgence;
+	private String codeAgent;	
+	private String nomAgent;	
+	private Boolean estSupprimer;
+
+}

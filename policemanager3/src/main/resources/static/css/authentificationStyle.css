@@ -1,0 +1,73 @@
+@charset "ISO-8859-1";
+body {
+padding-top: 10px;
+}[
+class*="col-"] , footer {
+background-color: light;
+border: 1px solid none;
+line-height: 40px;
+}
+.img_logo{
+ 	display: inline-block; 
+	padding: 10px;
+	border: 1px solid #0000ff;	
+}	
+#logo{text-align: left; padding-top:10px 10px}
+.authentification{display: inline-block; margin:50px 0 50px 0}
+h1{border:margin: 0px; font-size: 40px; font-weight: bold; text-align:center; color:#ffa500; }
+.formulaire label{
+	font: 20px Arial Bold, Helvetica, sans-serif;
+	color: #000000;
+	font-weight:bold;
+}
+div.con{
+	text-align:left;
+}
+input[type="text"],input[type="password"]{
+	display: block;
+    width: 480px;
+	padding: 8px;
+	height: 60px;
+	border-radius: 6px;	
+	background-color:#ffffff;
+	font: 20px Arial Bold, Helvetica, sans-serif;
+}
+input[type="text"],input[type="password"]:focus{
+	background-color:#ffffff;
+}
+.contenuBlanc{Background-color:#ffffff}
+section{Background-color:#ffffff}
+form{margin:0px;text-align:center}
+form div{text-align:center}
+.password{margin-top: 50px}
+.pm{text-align:center;}
+div span{
+/* 	font-size: 3em; */
+	font: 3em Arial Bold, Helvetica, sans-serif;
+	display:inline-block;
+	margin-top:50px
+	}
+.envoi{
+	width: 100px;
+	padding: 8px;
+	height: 50px;
+	color: #ffa500;
+	margin:40px 0 0 0;
+}
+.envoi:focus{
+	width: 100px;
+	padding: 8px;
+	height: 50px;
+	color: #ffa500;
+}
+a{
+	display:inline-block;
+	margin: 0 0 2% 70%;
+	text-decoration: none;
+    font-size: 20px;
+    font-style:italic;
+}
+.contenu{background-color: #ffffff}
+
+
+

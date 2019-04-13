@@ -1,0 +1,5 @@
+package com.belife.policemanager.model.repository;
+
+public interface ClientSociete {
+
+}

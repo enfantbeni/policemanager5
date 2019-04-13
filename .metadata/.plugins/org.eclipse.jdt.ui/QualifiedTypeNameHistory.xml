@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.BanquePrincipaleRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.SocieteRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.PlanRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.ClientRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.ClientPlanRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.ClientBanqueRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.Utilisateur"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.Agence"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.BanquePrincipale"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.dto.SourcePrelevementDto"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.Plan"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.Banque"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.ClientPlan"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.dto.BanqueDto"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.dto.ClientDto"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.ClientBanque"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.ClientSocieteRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.ClientSociete"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.Societe"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.SourcePoliceRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.BanqueRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.RolesRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.UtilisateurRepository"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.Client"/>
+<fullyQualifiedTypeName name="org.springframework.web.servlet.ModelAndView"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+<fullyQualifiedTypeName name="java.util.stream.IntStream"/>
+<fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+<fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="org.springframework.data.domain.Page"/>
+<fullyQualifiedTypeName name="org.springframework.data.domain.Pageable"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.entity.Agent"/>
+<fullyQualifiedTypeName name="com.belife.policemanager.model.repository.AgentRepository"/>
+</qualifiedTypeNameHistroy>

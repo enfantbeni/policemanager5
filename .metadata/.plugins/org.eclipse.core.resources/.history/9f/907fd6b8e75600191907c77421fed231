@@ -1,0 +1,27 @@
+package com.belife.policemanager.model.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.belife.policemanager.model.entity.Banque;
+import com.belife.policemanager.model.entity.BanquePrincipale;
+
+public interface BanquePrincipaleRepository extends JpaRepository<BanquePrincipale, Integer>{
+	
+	@Query("select b from BanquePrincipale b where b.nomBanque = :nomBanque AND b.estSupprimer=false")
+	Banque findBanqueByNom(@Param("nomBanque") String nomBanque);
+	
+	@Query("select codeBanque from BanquePrincipale b where b.codeBanque = :codeBanque AND b.estSupprimer=false")
+	List<String> findCodeGuichets(@Param("codeBanque") String codeBanque);
+	
+	@Query("select b from BanquePrincipale b where b.estSupprimer = :estSupprimer AND b.estSupprimer=false")
+	List<BanquePrincipale> findAllBanquePrincipales(@Param("estSupprimer") Boolean estSupprimer);
+	
+	@Query("select nomBanque from BanquePrincipale b where b.estSupprimer = :estSupprimer AND b.estSupprimer=false")
+	List<String> findNomsGuichet(@Param("estSupprimer") Boolean estSupprimer);
+	
+
+}

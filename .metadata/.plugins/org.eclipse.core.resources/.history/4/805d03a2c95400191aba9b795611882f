@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Soumission proposition</title>
+</head>
+<body>
+	<div class="row " th:fragment="soumissionProposition">
+         
+         <div class="row" ><div class="col-lg-6"></div><div class="col-lg-6"></div></div>
+        <div class="row"  >
+        	 
+        	 <div class="col-lg-12" >
+        	      <div class="row ">
+        	      	   <div class="col-lg-12 sourceForm"> 
+        	      	   
+        	      	   		 <div class="row">
+        	      	   		 	 <div class="col-lg-2"></div>
+        	      	   		     <div class="col-lg-10 "> <h3>Soumettre une proposition </h3>  </div>   	      	  		      
+        	      	   		 </div>
+        	      	   		 
+        	      	    </div>
+        	      	   <div class="col-lg-12 sourceForm"> 
+        	      	     
+        	      	   		<form  th:action="@{/confirmationSoumission}"  th:object="${clientDto}"  method="POST" > 
+						  		<div class="row ajoutDonneeUtilisateur">
+						  			<div class="col-lg-6">
+									     
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Plan Durée * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							              
+							                  	
+												<select name="planDuree">                      
+                         							<option  th:each="planDuree : ${planDurees}" th:value="${planDuree}" th:utext="${planDuree}"/>
+                  	 					  		</select>
+							                  	
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission ">
+							                  <label> Genre Assuré * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<select id="select" class="form-control" name="genre" > 
+														<option>Masculin</option>
+														<option>Feminin</option>
+												</select>
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Nom Assuré * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="nomAssure"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Nom Client * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="nomClient"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label th:utext="${genreSource}" >  </label> 
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="numero"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Source de prélèvement * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="banque"  class="form-control"  data-th-value="${nomSource}"  autocomplete="off" readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Périodicité * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<select id="select" class="form-control" name="periodicite" > 
+														<option>Annuelle</option>
+														<option>Mensuelle</option>
+														<option>Semestrielle</option>
+														<option>Trimestrielle</option>
+														<option>Unique</option>
+												</select>
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Couverture * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="couverture"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Prime * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="prime"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+										<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumissionPremier">
+							                  <label> Date de prélèvement * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 ">
+							                  	<input type="date" name="datePrelevement"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumissionPremier">
+							                  <label> Matricule client * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 ">
+							                  	<input type="type" name="matriculeClient"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   				  			
+						  			</div>	
+						  			
+						  								  		
+						  		    <div class="col-lg-6">
+						  		    	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Date de soumission * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="date" name="dateSoumission"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Date de naissance * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="date" name="dateNaissance"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Profession * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="profession"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Employeur * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="employeur"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Ville * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="ville"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Adresse postale * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="adressePostale"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Telephone 1 * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="telephone1"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Telephone 2 * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="tel" name="telephone2"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Code Agent * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="codeNomAgent"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelPreContrat">
+							                  <label> Nom commercial en pré-contrat *</label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="nomComPreContrat"  class="form-control"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>			
+						  		    	
+						  		    	<div class="row">
+						  					<div class="col-lg-4 validerSoumission"> <input type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /> </div>
+						  		 			<div class="col-lg-8 "></div>			  		 
+						  				
+						  				</div>	
+						  		    	
+						  		   						  		    	
+						  		    </div>
+						  		</div>  
+			 				 </form>
+        	      	   
+        	      	   </div>
+        	      </div>     	 
+        	 </div>
+        	
+            
+     </div>
+	
+		 
+	            
+    </div>
+
+</body>
+</html>

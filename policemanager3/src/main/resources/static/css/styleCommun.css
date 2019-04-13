@@ -1,0 +1,19 @@
+@charset "ISO-8859-1";
+
+body {
+	margin: 0px;
+	padding: 0px;
+	color: #3a3430;
+	font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
+	font-size: 13px;
+	line-height:1.5em; 
+	background-color:#0000ff;
+}
+header,footer{
+	background-color:#0000ff
+}
+.pied{
+	display:block;
+	height:150px;
+	width: auto;	
+}

@@ -1,0 +1,129 @@
+package com.belife.policemanager.model.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "banque")
+public class Banque implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer idBanque;
+	@Column(name = "nomBanque")
+	private String nomBanque;
+	@Column(name = "codeBanque")
+	private String codeBanque;
+	@Column(name = "codeGuichet")
+	private String codeGuichet;
+	@Column(name = "estSupprime", nullable=false)
+	private Boolean estSupprimer;
+	
+	@ManyToOne
+    @JoinColumn(name = "idClient")
+    Client idClient;
+	
+	@ManyToOne
+    @JoinColumn(name = "idClient")
+    Client idClient;
+	
+	
+	
+	public Banque() {
+		super();
+	}
+	
+	public Banque(Integer idBanque, String nomBanque, String codeBanque, String codeGuichet) {
+		super();
+		this.idBanque = idBanque;
+		this.nomBanque = nomBanque;
+		this.codeBanque = codeBanque;
+		this.codeGuichet = codeGuichet;
+	}
+	
+	
+	
+	public Banque(Boolean estSupprimer) {
+		super();
+		this.estSupprimer = estSupprimer;
+	}
+
+	public Banque(Integer idBanque, String nomBanque, String codeBanque) {
+		super();
+		this.idBanque = idBanque;
+		this.nomBanque = nomBanque;
+		this.codeBanque = codeBanque;
+	}
+	public Banque(String nomBanque, String codeBanque) {
+		super();
+		this.nomBanque = nomBanque;
+		this.codeBanque = codeBanque;
+	}
+	public Banque(String codeBanque) {
+		super();
+		this.codeBanque = codeBanque;
+	}
+	public Banque(Integer idBanque) {
+		super();
+		this.idBanque = idBanque;
+	}
+	public Integer getIdBanque() {
+		return idBanque;
+	}
+	public void setIdBanque(Integer idBanque) {
+		this.idBanque = idBanque;
+	}
+	public String getNomBanque() {
+		return nomBanque;
+	}
+	public void setNomBanque(String nomBanque) {
+		this.nomBanque = nomBanque;
+	}
+	public String getCodeBanque() {
+		return codeBanque;
+	}
+	public void setCodeBanque(String codeBanque) {
+		this.codeBanque = codeBanque;
+	}
+
+	public String getCodeGuichet() {
+		return codeGuichet;
+	}
+
+	public void setCodeGuichet(String codeGuichet) {
+		this.codeGuichet = codeGuichet;
+	}
+
+	public Boolean getEstSupprimer() {
+		return estSupprimer;
+	}
+   
+	public void setEstSupprimer(Boolean estSupprimer) {
+		this.estSupprimer = estSupprimer;
+	}
+
+	public Client getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(Client idClient) {
+		this.idClient = idClient;
+	}
+
+	
+	
+
+}

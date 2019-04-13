@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Choisir Guichet de Banque </title>
+</head>
+<body>
+
+<div  class="row">
+  <div class="col-lg-12">
+  		<div class="row " >
+        	  <div class="col-lg-2"></div>
+	          <div class="col-lg-10 sourceForm"> <h3>Choisir le Guichet de la Banque </h3> </div>        	      	   
+	          <div></div>
+	    </div>
+  
+  </div>
+  
+  <form action="">
+		       <div class="row sourceForm">						  					  		
+					<div class="col-lg-4 labelSource"> <label> Nom de la Banque : </label></div>								  		 
+				    <div class="col-lg-8 ajoutDonneeUtilisateur">						  
+							<select name="nomGuichet"  required   >                      
+			                         <option  th:each="nomGuichet : ${nomGuichets}" th:value="${nomGuichet}" th:utext="${nomGuichet}"/>
+			                </select>
+					</div>									  
+				</div> 
+  </form>
+
+</div>
+
+</body>
+</html>

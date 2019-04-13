@@ -1,0 +1,10 @@
+package com.belife.policemanager.model.dto;
+
+public class BanqueDto {
+	
+	private String nomGuichet;
+	private String codeGuichet;	
+	private String nomAgent;	
+	private Boolean estSupprimer;
+
+}

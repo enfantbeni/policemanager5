@@ -1,0 +1,41 @@
+package com.belife.policemanager.model.dto;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.belife.policemanager.model.entity.Agence;
+import com.belife.policemanager.model.entity.Roles;
+
+public class UtilisateurDto {
+	
+	
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer idUtilisateur;
+	@Column(name = "nomEtPrenom")
+	private String nomEtPrenom;
+	@Column(name = "identifiant")
+	private String identifiant;
+	@Column(name = "fontion")
+	private String fonction;
+	@Column(name = "password")
+	private String password;
+	@Column(name = "estSupprime", nullable=false)
+	private Boolean estSupprimer;
+	@OneToMany(targetEntity=com.belife.policemanager.model.entity.UtilisateurRoles.class, mappedBy = "idRoles")
+	List<Roles> roles;
+	@ManyToOne
+	@JoinColumn(name = "idAgence")
+	Agence idAgence;
+
+}

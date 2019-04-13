@@ -1,0 +1,20 @@
+package com.belife.policemanager.model.repository;
+
+import javax.persistence.Column;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.belife.policemanager.model.entity.Client;
+
+public interface ClientRepository extends JpaRepository<Client, Integer> {
+	
+	@Query("select c from Client  c.estSupprimer=false")
+	String findAllClients(@Param("idAgence") Integer idAgence);
+	
+
+}
+																													
+																																				
+																																					

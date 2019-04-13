@@ -1,0 +1,11 @@
+@charset "ISO-8859-1";
+body {
+padding-top: 10px;
+}[
+class*="col-"] , footer {
+background-color: light;
+border: 1px solid black;
+
+line-height: 40px;
+text-align: center;
+}

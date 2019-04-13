@@ -1,0 +1,542 @@
+package com.belife.policemanager.business;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.belife.policemanager.contrat.Request;
+import com.belife.policemanager.contrat.Response;
+import com.belife.policemanager.dto.UtilisateurDto;
+import com.belife.policemanager.entity.Utilisateur;
+import com.belife.policemanager.helper.FunctionalError;
+import com.belife.policemanager.helper.Validate;
+import com.belife.policemanager.repository.UtilisateurRepository;
+
+@Component
+public class UtilisateurBusiness implements IBasicBusiness<Request, Response> {
+
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
+
+	@PersistenceContext
+	private EntityManager em;
+
+	private Response response;
+
+	private Logger slf4jLogger;
+
+	// private SimpleDateFormat dateFormat;
+
+
+	public UtilisateurBusiness() {
+		// dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		slf4jLogger = LoggerFactory.getLogger(getClass());
+	}
+
+	/**
+	 * create Classe by using ClasseDto as object.
+	 * 
+	 * @param request
+	 * @return response
+	 * 
+	 */
+	@Transactional
+	public Response create(Request request, HttpServletRequest req) throws IOException {
+		slf4jLogger.info("----begin-----");
+		response = new Response();
+		// Demarrage de la session
+		HttpSession session = req.getSession();
+		String login = (String) session.getAttribute("LoginUser");
+		if (login == null) {
+			response.setMessage("Veuillez vous connecter svp");
+			return response;
+		} else {
+
+			List<Utilisateur> items = new ArrayList<Utilisateur>();
+
+			for (UtilisateurDto utilisateurDto : request.getDatasUtilisateur()) {
+				// Definir les parametres obligatoires
+				Map<String, Object> fieldsToVerify = new HashMap<String, Object>();
+				fieldsToVerify.put("nomEtPrenom", utilisateurDto.getNomEtPrenom());
+				fieldsToVerify.put("password", utilisateurDto.getPasswordUtilisateur());
+				if (!Validate.RequiredValue(fieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.FIELD_EMPTY(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+				// Controler le type des champs renseignés
+				Map<String, Object> TypefieldsToVerify = new HashMap<String, Object>();
+				TypefieldsToVerify.put("nomEtPrenom", utilisateurDto.getNomEtPrenom());
+				TypefieldsToVerify.put("password", utilisateurDto.getPasswordUtilisateur());
+				if (!Validate.CorrectTypedValue(TypefieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.TYPE_NOT_CORRECT(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+
+				// Verifier si l'utilisateur à inserer n'existe pas deja
+				Utilisateur utilisateur = null;
+				
+				utilisateur = utilisateurRepository.findByPassword(utilisateurDto.getPasswordUtilisateur());
+				if (utilisateur != null) {
+					response.setStatus(FunctionalError.DATA_EXIST("cet utilisateur existe deja"));
+					response.setHasError(true);
+					return response;
+				}
+
+				 utilisateur = null;
+				
+				ModelMapper modelMapper = new ModelMapper();
+				utilisateur= modelMapper.map(utilisateurDto, Utilisateur.class);
+				
+
+				// Ajouter l'utilisateur e à la liste de classes à inserer
+				items.add(classe);
+			}
+
+			if (!items.isEmpty()) {
+
+				List<Classe> classes = null;
+				// inserer les données en base de données
+				classes = classeRepository.save(items);
+
+				// Renseigner les données à retourner dans la reponse
+				response.setHasError(false);
+				response.setItemsClasse(Transformer.INSTANCE.ClasseToClasseDto(classes));
+			}
+		}
+
+		slf4jLogger.info("----end-----");
+
+		return response;
+	}
+
+	/**
+	 * update Classe by using ClasseDto as object.
+	 * 
+	 * @param request
+	 * @return response
+	 * 
+	 */
+	@Transactional
+	public Response update(Request request, HttpServletRequest req) throws IOException {
+
+		slf4jLogger.info("----begin-----");
+		response = new Response();
+		HttpSession session = req.getSession();
+		String login = (String) session.getAttribute("LoginUser");
+		if (login == null) {
+			response.setMessage("Veuillez vous connecter svp");
+			return response;
+		} else {
+
+			List<Classe> items = new ArrayList<Classe>();
+
+			for (ClasseDto classeDto : request.getDatasClasse()) {
+				// Definir les paramètres obligatoires
+				Map<String, Object> fieldsToVerify = new HashMap<String, Object>();
+				fieldsToVerify.put("id", classeDto.getId());
+				if (!Validate.RequiredValue(fieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.FIELD_EMPTY(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+
+				// Controler le type des champs renseignés
+				Map<String, Object> TypefieldsToVerify = new HashMap<String, Object>();
+				TypefieldsToVerify.put("id", classeDto.getId());
+				if (!Validate.CorrectTypedValue(TypefieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.TYPE_NOT_CORRECT(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+
+				// Verifier si l'objet correspondant à l'entier id existe
+				Classe classe = null;
+				classe = classeRepository.findOne(classeDto.getId());
+				if (classe == null) {
+					response.setStatus(FunctionalError.DATA_NOT_EXIST("cette classe n'existe pas dans le systeme"));
+					response.setHasError(true);
+					return response;
+				}
+
+				if (classeDto.getLibelle() != null && !classeDto.getLibelle().isEmpty()) {
+					Classe cl = null;
+					cl = classeRepository.findByLibelle(classeDto.getLibelle());
+					if (cl != null) {
+						if (!classe.getId().equals(cl.getId())) {
+							response.setStatus(
+									FunctionalError.DATA_EXIST("une classe ayant ce meme libelle existe deja"));
+							response.setHasError(true);
+							return response;
+						}
+					}
+					classe.setLibelle(classeDto.getLibelle());
+				}
+
+				// Ajouter la classe à la liste de classes à MAJ
+				items.add(classe);
+			}
+
+			if (!items.isEmpty()) {
+
+				List<Classe> classes = null;
+				// inserer les données en base de données
+				classes = classeRepository.save((Iterable) items);
+
+				// Renseigner les données à retourner dans la reponse
+				response.setHasError(false);
+				response.setItemsClasse(Transformer.INSTANCE.ClasseToClasseDto(classes));
+			}
+		}
+
+		slf4jLogger.info("----end-----");
+
+		return response;
+	}
+
+	/**
+	 * delete Classe by using classeDto as object.
+	 * 
+	 * @param request
+	 * @return response
+	 * 
+	 */
+	@Transactional
+	public Response delete(Request request, HttpServletRequest req) {
+		slf4jLogger.info("----begin-----");
+		response = new Response();
+		HttpSession session = req.getSession();
+		String login = (String) session.getAttribute("LoginUser");
+		if (login == null) {
+			response.setMessage("Veuillez vous connecter svp");
+			return response;
+		} else {
+
+			List<Classe> items = new ArrayList<Classe>();
+
+			for (ClasseDto classeDto : request.getDatasClasse()) {
+				// Definir les paramètres obligatoires
+				Map<String, Object> fieldsToVerify = new HashMap<String, Object>();
+				fieldsToVerify.put("id", classeDto.getId());
+				if (!Validate.RequiredValue(fieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.FIELD_EMPTY(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+
+				// Controler le type des champs renseignés
+				Map<String, Object> TypefieldsToVerify = new HashMap<String, Object>();
+				TypefieldsToVerify.put("id", classeDto.getId());
+				if (!Validate.CorrectTypedValue(TypefieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.TYPE_NOT_CORRECT(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+
+				// Verifier si l'objet correspondant à l'entier id existe
+				Classe classe = null;
+				classe = classeRepository.findOne(classeDto.getId());
+				if (classe == null) {
+					response.setStatus(FunctionalError.DATA_NOT_EXIST("cette classe n'existe pas dans le systeme"));
+					response.setHasError(true);
+					return response;
+				}
+
+				// Ajouter la classe à la liste de classes à supprimer
+				items.add(classe);
+			}
+
+			if (!items.isEmpty()) {
+				// inserer les données en base de données
+				classeRepository.delete((Iterable) items);
+
+				// Renseigner les données à retourner dans la reponse
+				response.setHasError(false);
+			}
+		}
+
+		slf4jLogger.info("----end-----");
+
+		return response;
+	}
+
+	/**
+	 * Finds a List of Classe by using classeDto a search criteria.
+	 * 
+	 * @param request
+	 * @return response
+	 * 
+	 */
+	public Response getByCriteria(Request request, HttpServletRequest req) {
+		slf4jLogger.info("----begin-----");
+		response = new Response();
+		HttpSession session = req.getSession();
+		String login = (String) session.getAttribute("LoginUser");
+		if (login == null) {
+			response.setMessage("Veuillez vous connecter svp");
+			return response;
+		} else {
+
+			List<Classe> items = null;
+			items = classeRepository.getByCriteria(request, em);
+			if (items != null && !items.isEmpty()) {
+				response.setCount(classeRepository.count(request, em));
+				response.setHasError(false);
+				response.setItemsClasse(Transformer.INSTANCE.ClasseToClasseDto(items));
+			} else {
+				response.setStatus(FunctionalError.DATA_EMPTY("il n'y a pas de classe respectant ce critère"));
+				response.setHasError(true);
+				return response;
+			}
+		}
+		slf4jLogger.info("----end-----");
+
+		return response;
+	}
+
+	@Transactional
+	public Response getStudent(Request request, HttpServletRequest req) {
+		slf4jLogger.info("----begin-----");
+		response = new Response();
+		HttpSession session = req.getSession();
+		String login = (String) session.getAttribute("LoginUser");
+		if (login == null) {
+			response.setMessage("Veuillez vous connecter svp");
+			return response;
+		} else {
+			try {
+				List<Etudiant> etudiants = new ArrayList<Etudiant>();
+				List<EtudiantDto> etudiantsDto = new ArrayList<EtudiantDto>();
+				for (ClasseDto classeDto : request.getDatasClasse()) {
+					Map<String, Object> fieldsToVerify = new HashMap<String, Object>();
+					fieldsToVerify.put("id", classeDto.getId());
+					if (!Validate.RequiredValue(fieldsToVerify).isGood()) {
+						response.setStatus(FunctionalError.FIELD_EMPTY(Validate.getValidate().getField()));
+						response.setHasError(true);
+						return response;
+					}
+					Classe classe = classeRepository.findOne(classeDto.getId());
+					if (classe == null) {
+						response.setMessage("cette classe n'existe pas!");
+						return response;
+					}
+					etudiants = etudiantRepository.findByClasse(classeDto.getId());
+
+				}
+				if (!etudiants.isEmpty()) {
+					etudiantsDto = Transformer.INSTANCE.EtudiantToEtudiantDto(etudiants);
+					response.setHasError(false);
+					response.setItemsEtudiant(etudiantsDto);
+				}
+
+			} catch (ParseException e) {
+				response.setHasError(true);
+				response.setStatus(FunctionalError.DATE_FORMAT_NOT_CORRECT(""));
+				slf4jLogger.warn("Erreur| code: {} -  message: {} - cause: {}  - SysMessage: {}",
+						StatusCode.FUNC_DATE_FORMAT_NOT_CORRECT, StatusMessage.FUNC_DATE_FORMAT_NOT_CORRECT,
+						e.getCause(), e.getMessage());
+			}
+		}
+		return response;
+	}
+
+	@Transactional
+	public Response createStudent(Request request, HttpServletRequest req) {
+		slf4jLogger.info("----begin-----");
+		response = new Response();
+		HttpSession session = req.getSession();
+		String login = (String) session.getAttribute("LoginUser");
+		if (login == null) {
+			response.setMessage("Veuillez vous connecter svp");
+			return response;
+		} else {
+			
+			List<Classe> items = new ArrayList<Classe>();
+			List<Etudiant> itemss = new ArrayList<Etudiant>();
+			try {
+			
+
+			for (ClasseDto classeDto : request.getDatasClasse()) {
+				// Definir les parametres obligatoires
+				Map<String, Object> fieldsToVerify = new HashMap<String, Object>();
+				fieldsToVerify.put("libelle", classeDto.getLibelle());
+				if (!Validate.RequiredValue(fieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.FIELD_EMPTY(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+				// Controler le type des champs renseignés
+				Map<String, Object> TypefieldsToVerify = new HashMap<String, Object>();
+				TypefieldsToVerify.put("libelle", classeDto.getLibelle());
+				if (!Validate.CorrectTypedValue(TypefieldsToVerify).isGood()) {
+					response.setStatus(FunctionalError.TYPE_NOT_CORRECT(Validate.getValidate().getField()));
+					response.setHasError(true);
+					return response;
+				}
+
+				// Verifier si la classe à inserer n'existe pas deja
+				Classe cl = null;
+				cl = classeRepository.findByLibelle(classeDto.getLibelle());
+				if (cl != null) {
+					response.setStatus(FunctionalError.DATA_EXIST("cette classe existe deja"));
+					response.setHasError(true);
+					return response;
+				}
+
+				//Classe classe = null;
+				Classe cls = Transformer.INSTANCE.ClasseDtoToClasse(classeDto);
+				Classe saveClasse = classeRepository.save(cls);
+				Integer id = saveClasse.getId();
+				// Ajouter la classe à la liste de classes à inserer
+				items.add(cl);
+				
+				for (EtudiantDto etudiantDto : classeDto.getEtudiantsDto()) {
+					// Definir les parametres obligatoires
+					Map<String, Object> fieldssToVerify = new HashMap<String, Object>();
+					fieldssToVerify.put("matricule", etudiantDto.getMatricule());
+					// fieldsToVerify.put("idClasseDto", etudiantDto.getIdClasseDto());
+					fieldssToVerify.put("nom", etudiantDto.getNom());
+					fieldssToVerify.put("dateNaissance", etudiantDto.getDateNaissance());
+					if (!Validate.RequiredValue(fieldssToVerify).isGood()) {
+						response.setStatus(FunctionalError.FIELD_EMPTY(Validate.getValidate().getField()));
+						response.setHasError(true);
+						return response;
+					}
+
+					// Controler le type des champs renseignés
+					Map<String, Object> TypefieldsToCOntrol = new HashMap<String, Object>();
+					TypefieldsToCOntrol.put("nom", etudiantDto.getNom());
+					TypefieldsToCOntrol.put("nom", etudiantDto.getNom());
+					TypefieldsToCOntrol.put("dateNaissance", etudiantDto.getDateNaissance());
+					if (!Validate.CorrectTypedValue(TypefieldsToCOntrol).isGood()) {
+						response.setStatus(FunctionalError.TYPE_NOT_CORRECT(Validate.getValidate().getField()));
+						response.setHasError(true);
+						return response;
+					}
+					
+					etudiantDto.setIdClasseDto(id);
+				    // Verifier si l'etudiant à inserer n'existe pas deja
+					Etudiant et = null;
+					et = etudiantRepository.findOne(etudiantDto.getMatricule());
+					if (et != null) {
+						response.setStatus(FunctionalError.DATA_EXIST("cet etudiant existe deja"));
+						response.setHasError(true);
+						return response;
+					}
+
+					Classe classes = null;
+					classes = classeRepository.findOne(id);
+					if (classes == null) {
+						response.setStatus(FunctionalError.DATA_NOT_EXIST("cette classe n'existe pas"));
+						response.setHasError(true);
+						return response;
+					}
+
+					//Etudiant etudiant = null;
+					et = Transformer.INSTANCE.EtudiantDtoToEtudiant(etudiantDto, classes);
+
+					// Ajouter l'etudiant à la liste de classes à inserer
+					itemss.add(et);
+				}
+			}
+
+				if (!itemss.isEmpty()) {
+
+					List<Etudiant> etudiants = null;
+					// inserer les données en base de données
+					etudiants = etudiantRepository.save((Iterable) itemss);
+
+					// Renseigner les données à retourner dans la reponse
+					response.setHasError(false);
+					response.setItemsEtudiant(Transformer.INSTANCE.EtudiantToEtudiantDto(etudiants));
+				}
+				
+			
+			/*if (!items.isEmpty()) {
+
+				List<Classe> classes = null;
+				// inserer les données en base de données
+				classes = classeRepository.save(items);
+
+				// Renseigner les données à retourner dans la reponse
+				response.setHasError(false);
+				response.setItemsClasse(Transformer.INSTANCE.ClasseToClasseDto(classes));
+			}*/
+
+			
+			/*if (!items.isEmpty()) {
+
+				List<Classe> classes = null;
+				// inserer les données en base de données
+				classes = classeRepository.save(items);
+
+				// Renseigner les données à retourner dans la reponse
+				response.setHasError(false);
+				response.setItemsClasse(Transformer.INSTANCE.ClasseToClasseDto(classes));
+			}*/
+			// AJout de l'ajout d'un étudiant!
+
+		
+				
+
+				slf4jLogger.info("----end-----");
+			} catch (ParseException e) {
+				// Format de la date incorrecte
+				response.setHasError(true);
+				response.setStatus(FunctionalError.DATE_FORMAT_NOT_CORRECT(""));
+				slf4jLogger.warn("Erreur| code: {} -  message: {} - cause: {}  - SysMessage: {}",
+						StatusCode.FUNC_DATE_FORMAT_NOT_CORRECT, StatusMessage.FUNC_DATE_FORMAT_NOT_CORRECT,
+						e.getCause(), e.getMessage());
+			}
+		}
+		slf4jLogger.info("----end-----");
+
+		return response;
+
+	}
+
+	@Override
+	public Response create(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response update(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response delete(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response getByCriteria(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+package com.belife.policemanager.model.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "clientSociete")
+public class ClientSociete {
+
+}

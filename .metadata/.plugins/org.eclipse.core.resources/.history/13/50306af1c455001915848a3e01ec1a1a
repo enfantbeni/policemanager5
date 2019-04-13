@@ -1,0 +1,20 @@
+package com.belife.policemanager.model.dto;
+
+public class UtilisateurDto {
+		
+	private Integer idUtilisateur;
+
+	private String nomEtPrenom;
+	
+	private String identifiant;
+	
+	private String fonction;
+	
+	private String password;
+	
+	private String nomAgence;
+
+	private Boolean estSupprimer;
+	
+
+}

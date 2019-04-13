@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+   <div class="row sidebar" th:fragment="sidebar">
+   		<div class="col-lg-4 bt_accueil" >  
+			<a class="navbar-brand accueil" href="#">Accueil</a>	
+   		</div>
+  		<div class="col-lg-4 bord" > <p> Tableau de bord</p></div>
+   		<div class="col-lg-4 connexion" > 
+   		  <div class="row">
+   		    
+   		    <div class="col-md-12 nom_logo"><b>Jean Michel</b>  <a href="" alt="img_utilisateur"> <img src="images/LOGO-BELIFE.png" alt="img_utilisateur" WIDTH=40 HEIGHT=30> </a> </div>
+		  
+   		  </div>
+   		 
+   		 
+   		 </div>
+   </div>
+</body>
+</html>

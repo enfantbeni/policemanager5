@@ -1,0 +1,57 @@
+package com.belife.policemanager.model.repository;
+
+import javax.persistence.Column;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.belife.policemanager.model.entity.Client;
+
+public interface ClientRepository extends JpaRepository<Client, Integer> {
+	
+	@Query("select c from Client c where c.genreAssure = :genreAssure AND c.nomAssure = :nomAssure AND c.nomClient = :nomClient AND c.matriculeClient = :matriculeClient AND c.numero = :numero AND  AND a.estSupprimer=false")
+	String findClientByAllParams(@Param("idAgence") Integer idAgence);
+	
+
+}
+																													
+																													@Column(name = "genreAssure")
+																													private String genreAssure;
+																													@Column(name = "nomAssure")
+																													private String nomAssure;
+																													@Column(name = "nomClient")
+																													private String nomClient;	
+																													@Column(name = "matriculeClient")
+																													private String matriculeClient;
+																													@Column(name = "numero")
+																													private String numero;
+																													@Column(name = "periodicite")
+																													private String periodicite ;
+																													@Column(name = "couverture")
+																													private Long couverture;
+																													@Column(name = "prime")
+																													private Long prime;
+																													@Column(name = "datePrelevement")
+																													private String datePrelevement;
+																													@Column(name = "dateSoumission")
+																													private String dateSoumission;
+																													@Column(name = "dateNaissance")
+																													private String dateNaissance;
+																													@Column(name = "profession")
+																													private String profession ;
+																													@Column(name = "employeur")
+																													private String employeur ;
+																													@Column(name = "ville")
+																													private String ville ;
+																													@Column(name = "adressePostale")
+																													private String adressePostale ;
+																													@Column(name = "telephone1")
+																													private String tellephone1 ;
+																													@Column(name = "telephone2")
+																													private String tellephone2 ;
+																													
+																													@Column(name = "nomComPreContrat")
+																													private String nomComPreContrat;
+																													@Column(name = "estSupprime", nullable=false)
+																													private Boolean estSupprimer;

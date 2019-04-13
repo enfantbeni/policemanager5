@@ -1,0 +1,7 @@
+package com.belife.policemanager.model.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ClientBanque extends JpaRepository<ClientBanque, Integer>  {
+
+}

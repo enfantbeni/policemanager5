@@ -1,0 +1,9 @@
+package com.belife.policemanager.model.repository;
+
+
+
+public interface ClientPlanRepository extends JpaRepository<ClientPlan, Integer> {
+	
+	
+
+}

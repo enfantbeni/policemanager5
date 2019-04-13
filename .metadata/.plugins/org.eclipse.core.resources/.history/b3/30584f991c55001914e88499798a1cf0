@@ -1,0 +1,27 @@
+package com.belife.policemanager.model.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+public class clientPlan implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer idClienPlan;
+	
+	@Column(name = "genreAssure")
+	private String genreAssure;
+	@Column(name = "nomAssure")
+	private String nomAssure;
+
+}

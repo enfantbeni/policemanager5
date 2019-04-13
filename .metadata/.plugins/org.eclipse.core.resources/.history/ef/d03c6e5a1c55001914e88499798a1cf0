@@ -1,0 +1,7 @@
+package com.belife.policemanager.model.entity;
+
+import java.io.Serializable;
+
+public class clientPlan implements Serializable {
+
+}

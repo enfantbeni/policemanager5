@@ -1,0 +1,36 @@
+package com.belife.policemanager.model.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "clientBanque")
+public class ClientBanque implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer idClientBanque;
+	
+	@ManyToOne
+    @JoinColumn(name = "idClient")
+    Utilisateur idUtilisateur;
+	
+    @ManyToOne
+    @JoinColumn(name = "idRoles")
+    Roles idRoles;
+
+}
